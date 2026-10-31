@@ -71,7 +71,7 @@ A conta segue o modelo de preço do Uber Envios e se lê de dentro para fora.
 
 | Parte           | Padrão      | O que é |
 | --------------- | ----------- | ------- |
-| `km`            | pelo endereço | Distância **de carro** da fábrica até o cliente. No protótipo vem de uma tabela por bairro; no sistema real, de uma API de rotas (não é linha reta). |
+| `km`            | pelo endereço | Distância pela **rota de carro** da fábrica até o cliente, como o serviço de mapa calcula (não é linha reta). No protótipo vem de uma tabela por bairro; no sistema real, de uma API de rotas. É só a forma de medir: o veículo da entrega (moto ou carro) ainda não foi definido. |
 | `tarifa_base`   | R$ 5,00     | Valor fixo de toda entrega, cobrado só por sair com o pedido (como a "bandeirada" do táxi). |
 | `valor_por_km`  | R$ 1,80     | Quanto cada km de rota soma ao frete. |
 | `frete_mínimo`  | R$ 12,00    | Piso. Se `tarifa_base + valor_por_km × km` der menos que isso (entrega muito perto), vale o mínimo. O `max(...)` escolhe o maior dos dois. |
@@ -80,7 +80,9 @@ A conta segue o modelo de preço do Uber Envios e se lê de dentro para fora.
 ### O multiplicador
 
 É a margem em cima do valor calculado no modelo do Uber. **1,10 significa
-"valor do Uber + 10%"** (decisão de 29/10).
+"valor do Uber + 10%"** (decisão de 29/10). Segundo a decisão registrada
+no Trello, os 10% servem para cobrir a variação de preço do Uber Envios por
+horário.
 
 - `1,00` repassa o valor sem margem; `1,20` soma 20%; `1,10` soma 10%.
 - Ele entra **por último**, então vale também em cima do frete mínimo:
