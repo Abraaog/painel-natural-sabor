@@ -48,7 +48,7 @@
         '<div class="grade-sabores">' + prod.sabores.map(linhaSabor).join("") + "</div>";
     }).join("") +
       '<p class="nota">Sabor novo já nasce com <b>um tamanho e um preço</b> (nada é de graça), mas <b>desligado</b>. ' +
-      "Confira e ligue quando quiser — só liga se algum tamanho tiver preço maior que zero. " +
+      "Confira e ligue quando quiser. Só liga se algum tamanho tiver preço maior que zero. " +
       "O bot confere o carrinho de novo antes de gerar o link: se algo foi desligado no meio da conversa, sai do carrinho com aviso ao cliente.</p>";
     ligar(el);
   }

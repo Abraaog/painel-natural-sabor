@@ -1,6 +1,6 @@
 /* Estado do protótipo (faz o papel do backend + banco).
    Toda mudança de status passa por aqui e fica no histórico do pedido.
-   É uma demonstração: o estado vive só em memória durante o uso — recarregar
+   É uma demonstração: o estado vive só em memória durante o uso; recarregar
    a página volta tudo ao início (seed). O localStorage é usado apenas para
    sincronizar abas abertas ao mesmo tempo (painel numa aba, simulador na
    outra), nunca para restaurar sessões anteriores. */
@@ -165,7 +165,7 @@
   }
 
   function marcarAcimaLimite(id) {
-    commit(trocarPedido(st, id, (p) => anotar(p, "Bot", "Carrinho passou de 100 kg — combinar pelo WhatsApp",
+    commit(trocarPedido(st, id, (p) => anotar(p, "Bot", "Carrinho passou de 100 kg. Combinar pelo WhatsApp",
       { acima100kg: true, passoBot: "acima100kg" })), { tipo: "acima100kg", id });
   }
 
@@ -205,7 +205,7 @@
       novo = comMensagem(novo, p.telefone, "bot", T.pago(novoP));
       commit(novo, { tipo: "pago", id });
     } else if (resultado === "tardio") {
-      const novoP = anotar(p, "Mercado Pago (webhook)", "Pagamento chegou DEPOIS do cancelamento — conferir com o cliente",
+      const novoP = anotar(p, "Mercado Pago (webhook)", "Pagamento chegou DEPOIS do cancelamento. Conferir com o cliente",
         { pagamentos: p.pagamentos.concat([pg]), alertaTardio: true });
       let novo = trocarPedido(st, id, () => novoP);
       novo = comMensagem(novo, p.telefone, "bot", T.pagouDepois(novoP));
@@ -248,7 +248,7 @@
   function cancelarPeloCliente(id) {
     const p = pedido(id);
     if (!p || !["conversa", "nao_pago"].includes(p.status)) return;
-    const obs = p.status === "nao_pago" ? "Cliente digitou cancelar — link invalidado" : "Cliente digitou cancelar";
+    const obs = p.status === "nao_pago" ? "Cliente digitou cancelar, link invalidado" : "Cliente digitou cancelar";
     commit(trocarPedido(st, id, (x) => transicao(x, "cancelado", "Cliente", obs,
       { motivo: "Cancelado pelo cliente", passoBot: "finalizado" })), { tipo: "cancelado", id });
   }
@@ -260,7 +260,7 @@
     const eventos = [];
     st.pedidos.forEach((p) => {
       if (R.linkExpirado(p, t)) {
-        novo = trocarPedido(novo, p.id, (x) => transicao(x, "cancelado", "Sistema", "Link expirou sem pagamento — link invalidado",
+        novo = trocarPedido(novo, p.id, (x) => transicao(x, "cancelado", "Sistema", "Link expirou sem pagamento, link invalidado",
           { motivo: "Link expirou (" + novo.config.janelaPagamentoMin + " min)", passoBot: "finalizado" }));
         novo = comMensagem(novo, p.telefone, "bot", T.expirou(novo.config.janelaPagamentoMin));
         eventos.push({ tipo: "expirou", id: p.id });

@@ -1,5 +1,5 @@
 /* Dados de exemplo e tabelas de apoio do protótipo.
-   Catálogo e preços são EXEMPLOS — o catálogo real está pendente (cartão da Etapa 0). */
+   Catálogo e preços são EXEMPLOS: o catálogo real está pendente (cartão da Etapa 0). */
 (function (FP) {
   "use strict";
   const R = FP.regras;

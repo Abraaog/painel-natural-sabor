@@ -55,9 +55,9 @@
     const linhas = lista.slice().sort((a, b) => b.criadoEm - a.criadoEm).map((p) => {
       const pg = p.pagamentos.find((x) => !x.tardio);
       return '<tr data-id="' + esc(p.id) + '" tabindex="0"><td>' + esc(p.numero) + "</td><td>" + U.dataHora(p.criadoEm) + "</td><td>" + esc(p.cliente) +
-        "</td><td>" + esc(p.endereco ? p.endereco.cidade : "—") + '</td><td class="num">' + U.kg(R.pesoTotalG(p.itens)) +
+        "</td><td>" + esc(p.endereco ? p.endereco.cidade : "-") + '</td><td class="num">' + U.kg(R.pesoTotalG(p.itens)) +
         '</td><td class="num">' + U.dinheiro(p.subtotalCent) + '</td><td class="num">' + U.dinheiro(p.freteCent) +
-        '</td><td class="num"><b>' + U.dinheiro(p.totalCent) + "</b></td><td>" + esc(pg ? pg.metodo : "—") +
+        '</td><td class="num"><b>' + U.dinheiro(p.totalCent) + "</b></td><td>" + esc(pg ? pg.metodo : "-") +
         '</td><td><span class="chip etapa-' + p.status + '">' + R.ETAPAS[p.status].rotulo + "</span></td></tr>";
     }).join("");
     return '<div class="tabela-rolagem"><table class="relatorio"><thead><tr><th>Nº</th><th>Criado em</th><th>Cliente</th><th>Cidade</th>' +

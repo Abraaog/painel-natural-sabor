@@ -203,7 +203,7 @@
       pagamentos: [tardio],
       alertaTardio: true,
       historico: p.historico.concat([{ em: tardio.em, de: "cancelado", para: "cancelado", autor: "Mercado Pago (webhook)",
-        obs: "Pagamento chegou DEPOIS do cancelamento — conferir com o cliente" }]),
+        obs: "Pagamento chegou DEPOIS do cancelamento. Conferir com o cliente" }]),
     }));
 
     p = comItens(base(n(), "Bruno Teixeira", "5583944440000", agora - 50 * HORA), [item(cat, "manga-500", 2)], "cep");

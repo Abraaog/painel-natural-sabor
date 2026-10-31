@@ -19,13 +19,13 @@
     listaSabores: (sabores) =>
       "Escolha o *sabor* (digite o número):\n" + sabores.map((s, i) => (i + 1) + ". " + s.nome).join("\n"),
     listaTamanhos: (sabor, variantes) =>
-      "*" + sabor + "* — escolha o tamanho:\n" +
-      variantes.map((v, i) => (i + 1) + ". " + v.rotulo + " — " + U().dinheiro(v.precoCent)).join("\n"),
+      "*" + sabor + "*. Escolha o tamanho:\n" +
+      variantes.map((v, i) => (i + 1) + ". " + v.rotulo + ": " + U().dinheiro(v.precoCent)).join("\n"),
     perguntaQtd: (v) => "Quantas unidades de *" + v.nome + " " + v.rotulo + "*?",
     carrinho: (itens) => {
       if (!itens.length) return "Seu carrinho está vazio.";
       const linhas = itens.map((i, n) =>
-        (n + 1) + ". " + i.qtd + "x " + i.nome + " " + i.rotulo + " — " + U().dinheiro(i.precoCent * i.qtd));
+        (n + 1) + ". " + i.qtd + "x " + i.nome + " " + i.rotulo + ": " + U().dinheiro(i.precoCent * i.qtd));
       return "*Seu carrinho*\n" + linhas.join("\n") +
         "\n\nSubtotal: *" + U().dinheiro(R.subtotalCent(itens)) + "* (" + U().kg(R.pesoTotalG(itens)) + ")";
     },
@@ -42,7 +42,7 @@
       "Ainda não entregamos em *" + cidade + "*. 😕\nAtendemos só *João Pessoa, Cabedelo e Bayeux*.\n" +
       "Digite outro CEP ou *cancelar*.",
     pedeNumero: (e) =>
-      "Achei: " + (e.rua ? e.rua + ", " : "") + e.bairro + " — " + e.cidade + "/" + e.uf +
+      "Achei: " + (e.rua ? e.rua + ", " : "") + e.bairro + ", " + e.cidade + "/" + e.uf +
       "\nAgora digite o *número* e o complemento (ex.: 120, ap 302).",
     perguntaEntrega: (hojeOk) =>
       "Quando você quer receber?\n" +
@@ -53,12 +53,12 @@
       motivo + (sugestao ? "\nO próximo dia útil é *" + R.dataBr(sugestao) + "*. Digite *1* para aceitar ou outra data." : ""),
     resumo: (p) =>
       "*Resumo do pedido*\n" +
-      p.itens.map((i) => "• " + i.qtd + "x " + i.nome + " " + i.rotulo + " — " + U().dinheiro(i.precoCent * i.qtd)).join("\n") +
+      p.itens.map((i) => "• " + i.qtd + "x " + i.nome + " " + i.rotulo + ": " + U().dinheiro(i.precoCent * i.qtd)).join("\n") +
       "\n\nSubtotal: " + U().dinheiro(p.subtotalCent) +
       "\nFrete (" + String(p.frete.km).replace(".", ",") + " km): " + U().dinheiro(p.freteCent) +
       "\n*Total: " + U().dinheiro(p.totalCent) + "*" +
       "\n\nEntrega: " + (p.entrega.tipo === "hoje" ? "*hoje*" : "*" + R.dataBr(p.entrega.data) + "* (agendada)") +
-      "\nEndereço: " + [p.endereco.rua, p.endereco.numero].filter(Boolean).join(", ") + " — " + p.endereco.bairro + ", " + p.endereco.cidade +
+      "\nEndereço: " + [p.endereco.rua, p.endereco.numero].filter(Boolean).join(", ") + ", " + p.endereco.bairro + ", " + p.endereco.cidade +
       "\n\n1️⃣ Confirmar e receber o link de pagamento\n2️⃣ Alterar o carrinho",
     itensRemovidos: (itens) =>
       "⚠️ Enquanto você montava o pedido, estes itens ficaram indisponíveis e saíram do carrinho:\n" +

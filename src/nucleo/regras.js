@@ -1,4 +1,4 @@
-/* Regras de negócio do MVP — funções puras, sem tela.
+/* Regras de negócio do MVP: funções puras, sem tela.
    Fonte da verdade das regras no protótipo. Roda no navegador (FP.regras)
    e no Node (testes/regras.test.js). Dinheiro sempre em centavos. */
 (function (raiz, fabrica) {
