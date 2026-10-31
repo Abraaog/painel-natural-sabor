@@ -41,8 +41,8 @@ npx serve .
 
 ## Regras de negócio aplicadas
 
-- **Frete nunca é grátis.** Calculado por `max(frete_mínimo, tarifa_base +
-  valor_por_km × km) × multiplicador`, com a distância em km por bairro.
+- **Frete nunca é grátis.** Veja abaixo, em [Como o frete é calculado](#como-o-frete-é-calculado),
+  o que é cada parte da conta.
 - **Cobertura restrita** a João Pessoa, Cabedelo e Bayeux (cada cidade pode ser
   pausada, mas nenhuma outra é aceita).
 - **Entrega** hoje ou agendada em até 30 dias, sempre em **dia útil** (fim de
@@ -58,6 +58,47 @@ npx serve .
 - **Kanban** com as colunas *Conversa iniciada · Não pago · Pago · Em entrega*
   (concluído sai do quadro). O operador só arrasta **Pago → Em entrega** e
   **Em entrega → Concluído**; os demais movimentos são bloqueados com o motivo.
+
+---
+
+## Como o frete é calculado
+
+```
+frete = max(frete_mínimo, tarifa_base + valor_por_km × km) × multiplicador
+```
+
+A conta segue o modelo de preço do Uber Envios e se lê de dentro para fora.
+
+| Parte           | Padrão      | O que é |
+| --------------- | ----------- | ------- |
+| `km`            | pelo endereço | Distância **de carro** da fábrica até o cliente. No protótipo vem de uma tabela por bairro; no sistema real, de uma API de rotas (não é linha reta). |
+| `tarifa_base`   | R$ 5,00     | Valor fixo de toda entrega, cobrado só por sair com o pedido (como a "bandeirada" do táxi). |
+| `valor_por_km`  | R$ 1,80     | Quanto cada km de rota soma ao frete. |
+| `frete_mínimo`  | R$ 12,00    | Piso. Se `tarifa_base + valor_por_km × km` der menos que isso (entrega muito perto), vale o mínimo. O `max(...)` escolhe o maior dos dois. |
+| `multiplicador` | 1,10        | Ajuste final aplicado sobre o resultado anterior. |
+
+### O multiplicador
+
+É a margem em cima do valor calculado no modelo do Uber. **1,10 significa
+"valor do Uber + 10%"** (decisão de 29/10).
+
+- `1,00` repassa o valor sem margem; `1,20` soma 20%; `1,10` soma 10%.
+- Ele entra **por último**, então vale também em cima do frete mínimo:
+  R$ 12,00 × 1,10 = R$ 13,20.
+- A tela de Configurações **não aceita valor menor que 1**, para o frete nunca
+  ficar abaixo do valor de referência.
+
+### Exemplos com os valores padrão
+
+| Destino               | km  | `tarifa_base + valor_por_km × km` | Depois do `max` | × 1,10 = **frete** |
+| --------------------- | --- | --------------------------------- | --------------- | ------------------ |
+| Tambiá (JP)           | 2,5 | 5,00 + 1,80 × 2,5 = R$ 9,50       | R$ 12,00 (mínimo) | **R$ 13,20**     |
+| Manaíra (JP)          | 9   | 5,00 + 1,80 × 9 = R$ 21,20        | R$ 21,20        | **R$ 23,32**       |
+| Intermares (Cabedelo) | 16  | 5,00 + 1,80 × 16 = R$ 33,80       | R$ 33,80        | **R$ 37,18**       |
+
+Todos esses valores o dono muda na tela **Configurações**, que mostra a
+simulação na hora. O frete é **congelado** no momento em que o link de
+pagamento é gerado: mudar a configuração depois não altera pedido já feito.
 
 ---
 
