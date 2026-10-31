@@ -3,11 +3,10 @@
    Nada é de graça: sabor novo nasce com um tamanho e um preço, e só liga com preço > 0. */
 (function (FP) {
   "use strict";
+  const R = FP.regras;
   const U = FP.util;
   const E = () => FP.estado;
   const esc = U.esc;
-
-  const parseCent = (v) => Math.round(Number(String(v).replace(/\./g, "").replace(",", ".")) * 100);
 
   function chave(attrs, ligado, rotulo) {
     return '<label class="chave"><input type="checkbox" ' + attrs + (ligado ? " checked" : "") +
@@ -22,15 +21,15 @@
       '<span class="selo ' + (noBot ? "selo-verde" : "selo-cinza") + '">' + (noBot ? "No menu do bot" : "Fora do menu") + "</span>" +
       chave('data-sabor="' + esc(s.id) + '"', s.ativo, "Sabor " + s.nome + " ativo") + "</header>" +
       '<table class="mini"><thead><tr><th>Tamanho</th><th class="num">Preço</th><th>Ativo</th></tr></thead><tbody>' +
-      s.variantes.map((v) => "<tr><td>" + esc(v.rotulo) + '</td><td class="num"><input class="preco" inputmode="decimal" data-preco="' +
-        esc(s.id) + "|" + esc(v.id) + '" value="' + (v.precoCent / 100).toFixed(2).replace(".", ",") + '" aria-label="Preço ' +
+      s.variantes.map((v) => "<tr><td>" + esc(v.rotulo) + '</td><td class="num"><input class="preco" inputmode="decimal" data-dinheiro data-preco="' +
+        esc(s.id) + "|" + esc(v.id) + '" value="' + esc(U.dinheiro(v.precoCent)) + '" aria-label="Preço ' +
         esc(s.nome + " " + v.rotulo) + '"></td><td>' +
         chave('data-var="' + esc(s.id) + "|" + esc(v.id) + '"' + (s.ativo ? "" : " disabled"), v.ativo, s.nome + " " + v.rotulo + " ativo") +
         "</td></tr>").join("") +
       "</tbody></table>" +
       '<form class="novo-tam" data-tamsabor="' + esc(s.id) + '">' +
       '<input name="tam" placeholder="Novo tamanho (ex.: 2 kg)" maxlength="12" aria-label="Novo tamanho de ' + esc(s.nome) + '">' +
-      '<input name="preco" inputmode="decimal" placeholder="Preço" aria-label="Preço do novo tamanho">' +
+      '<input name="preco" inputmode="decimal" data-dinheiro placeholder="R$ 0,00" aria-label="Preço do novo tamanho">' +
       '<button class="btn btn-sm">+ tamanho</button></form>' +
       "</article>";
   }
@@ -44,7 +43,7 @@
         '<form class="novo-sabor" data-produto="' + esc(prod.id) + '">' +
         '<input name="nome" placeholder="Novo sabor" maxlength="40" aria-label="Novo sabor">' +
         '<input name="tam" placeholder="Tamanho (ex.: 1 kg)" maxlength="12" aria-label="Tamanho">' +
-        '<input name="preco" inputmode="decimal" placeholder="Preço" aria-label="Preço">' +
+        '<input name="preco" inputmode="decimal" data-dinheiro placeholder="R$ 0,00" aria-label="Preço">' +
         '<button class="btn">Adicionar</button></form></div>' +
         '<div class="grade-sabores">' + prod.sabores.map(linhaSabor).join("") + "</div>";
     }).join("") +
@@ -55,6 +54,11 @@
   }
 
   function ligar(el) {
+    /* Digitou "12": ao sair do campo vira "R$ 12,00". Valor inválido fica como está para o aviso explicar. */
+    U.$$("[data-dinheiro]", el).forEach((i) => i.addEventListener("blur", () => {
+      const cent = R.centavosDeTexto(i.value);
+      if (cent > 0) i.value = U.dinheiro(cent);
+    }));
     U.$$("[data-sabor]", el).forEach((i) => i.addEventListener("change", () => {
       const r = E().alternarSabor(i.dataset.sabor, i.checked);
       if (!r.ok) { i.checked = false; FP.ui.toast(r.motivo, "erro"); return; }
@@ -73,13 +77,13 @@
     }));
     U.$$("[data-preco]", el).forEach((i) => i.addEventListener("change", () => {
       const [s, v] = i.dataset.preco.split("|");
-      const r = E().alterarPreco(s, v, parseCent(i.value));
+      const r = E().alterarPreco(s, v, R.centavosDeTexto(i.value));
       FP.ui.toast(r.ok ? "Preço salvo. Vale para pedidos novos; pedidos já feitos não mudam." : r.motivo, r.ok ? "ok" : "erro");
       if (!r.ok) FP.ui.redesenhar();
     }));
     U.$$(".novo-sabor", el).forEach((f) => f.addEventListener("submit", (e) => {
       e.preventDefault();
-      const r = E().novoSabor(f.dataset.produto, f.nome.value, f.tam.value, parseCent(f.preco.value));
+      const r = E().novoSabor(f.dataset.produto, f.nome.value, f.tam.value, R.centavosDeTexto(f.preco.value));
       if (!r.ok) { FP.ui.toast(r.motivo, "erro"); return; }
       FP.ui.toast("Sabor criado com preço. Confira e ligue quando quiser.", "ok");
       const campo = U.$(".novo-sabor input", el);
@@ -87,7 +91,7 @@
     }));
     U.$$(".novo-tam", el).forEach((f) => f.addEventListener("submit", (e) => {
       e.preventDefault();
-      const r = E().novoTamanho(f.dataset.tamsabor, f.tam.value, parseCent(f.preco.value));
+      const r = E().novoTamanho(f.dataset.tamsabor, f.tam.value, R.centavosDeTexto(f.preco.value));
       FP.ui.toast(r.ok ? "Tamanho adicionado." : r.motivo, r.ok ? "ok" : "erro");
     }));
   }

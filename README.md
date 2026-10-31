@@ -63,6 +63,8 @@ ambiente local — a Vercel serve os arquivos estáticos diretamente.
 - **Entrega** hoje ou agendada em até 30 dias, sempre em **dia útil** (fim de
   semana e feriados são recusados, com sugestão do próximo dia válido).
 - **Acima de 100 kg** o pedido vai para combinação manual.
+- **Nada é de graça no catálogo.** Sabor novo já nasce com um tamanho e um
+  preço maior que zero, e um sabor só pode ser ligado se algum tamanho tiver preço.
 - **Link de pagamento (Mercado Pago)** vale 15 minutos e é cancelado
   automaticamente quando expira.
 - **Pagamento após o cancelamento** não é honrado e não gera estorno automático;

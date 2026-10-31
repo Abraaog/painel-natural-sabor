@@ -170,3 +170,14 @@ test("peso do tamanho sai do rótulo (kg/g) e recusa rótulo sem unidade", () =>
   assert.equal(R.pesoDeRotulo("grande"), null);
   assert.equal(R.pesoDeRotulo(""), null);
 });
+
+test("valor digitado vira centavos, com ou sem R$", () => {
+  assert.equal(R.centavosDeTexto("12"), 1200);
+  assert.equal(R.centavosDeTexto("R$ 12,00"), 1200);
+  assert.equal(R.centavosDeTexto("R$ 12,50"), 1250);
+  assert.equal(R.centavosDeTexto("12,5"), 1250);
+  assert.equal(R.centavosDeTexto("12.50"), 1250);
+  assert.equal(R.centavosDeTexto("1.250,00"), 125000);
+  assert.ok(Number.isNaN(R.centavosDeTexto("")));
+  assert.ok(Number.isNaN(R.centavosDeTexto("abc")));
+});

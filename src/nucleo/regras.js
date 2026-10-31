@@ -273,6 +273,16 @@
     return Math.round(m[2] === "kg" ? n * 1000 : n);
   }
 
+  /* Valor digitado pelo operador -> centavos. Aceita "12", "12,5", "R$ 12,00",
+     "1.250,00" e "12.50". Devolve NaN quando não há número. */
+  function centavosDeTexto(texto) {
+    let s = String(texto == null ? "" : texto).replace(/[^\d,.]/g, "");
+    if (s.includes(",")) s = s.replace(/\./g, "").replace(",", ".");
+    else if (!/^\d+\.\d{1,2}$/.test(s)) s = s.replace(/\./g, "");
+    if (!s) return NaN;
+    return Math.round(Number(s) * 100);
+  }
+
   /* Na hora de gerar o link: tira o que foi desligado e atualiza preço que mudou. */
   function revalidarCarrinho(itens, catalogo) {
     const disp = new Map(variantesDisponiveis(catalogo).map((v) => [v.varianteId, v]));
@@ -322,7 +332,7 @@
     validarConfigFrete, calcularFrete,
     isoLocal, somarDias, diasEntre, dataBr, motivoNaoUtil, eDiaUtil, proximoDiaUtil,
     validarEntrega, interpretarDataBr,
-    variantesDisponiveis, saboresDisponiveis, saborTemPreco, pesoDeRotulo, revalidarCarrinho,
+    variantesDisponiveis, saboresDisponiveis, saborTemPreco, pesoDeRotulo, centavosDeTexto, revalidarCarrinho,
     subtotalCent, pesoTotalG, excedeLimitePeso,
     avaliarPagamento, linkExpirado, conversaAbandonada,
   };

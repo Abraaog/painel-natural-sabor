@@ -24,7 +24,7 @@
   const REVISAO_TELAS = [
     ["Pedidos (Kanban)", "Ficou com as 4 colunas da regra. Concluído virou só alvo de soltar. Saíram os botões \"Receber pagamento\" e \"Cliente ligou e pagou direto\": só o Mercado Pago move para Pago. O operador só move Pago → Em entrega → Concluído."],
     ["Pop-up do pedido", "Mostra a fórmula do frete com os números, o peso, o link, os pagamentos e o histórico de status. Saiu a edição de data de entrega: quem escolhe é o cliente no bot, e o frete já foi cobrado."],
-    ["Produtos", "Organizado por sabor, com preço editável por tamanho e chave em cada um. Os tamanhos são 1 kg, 500 g e 250 g. Sabor novo nasce desligado."],
+    ["Produtos", "Organizado por sabor, com preço editável por tamanho e chave em cada um. Dá para criar tamanhos novos (ex.: 2 kg). Sabor novo já nasce com tamanho e preço, mas desligado; só liga se algum tamanho tiver preço maior que zero."],
     ["Relatórios", "Uma aba por status, incluindo Cancelado e Abandonada. Tem soma no rodapé, filtro de período e CSV que abre certo no Excel. Os indicadores do piloto ficam no topo."],
     ["Configurações", "Tem frete com simulação ao vivo, prazos, as 3 cidades e as regras fixas. Antes, o multiplicador estava em 1,0 e entrava antes do mínimo."],
     ["Login", "Tela nova. A senha só existe como hash e a sessão fica aberta no monitor."],

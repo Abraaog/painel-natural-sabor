@@ -16,7 +16,7 @@
 .sabor.desligado { background: var(--surface-2); }
 .sabor.desligado h3, .sabor.desligado table { opacity: .55; }
 .sabor table.mini td { padding: 5px 0; }
-.preco { width: 88px; height: 30px; text-align: right; }
+.preco { width: 104px; height: 30px; text-align: right; }
 .chave { position: relative; display: inline-block; width: 34px; height: 20px; flex: none; }
 .chave input { position: absolute; opacity: 0; width: 0; height: 0; }
 .chave span { position: absolute; inset: 0; border-radius: 999px; background: var(--border-strong); cursor: pointer; transition: background var(--rapido); }

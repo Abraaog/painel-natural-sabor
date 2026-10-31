@@ -7,8 +7,6 @@
   const esc = U.esc;
   let kmTeste = 9;
 
-  const reais = (c) => (c / 100).toFixed(2).replace(".", ",");
-  const lerCent = (v) => Math.round(Number(String(v).replace(/\./g, "").replace(",", ".")) * 100);
 
   function campo(id, rotulo, valor, dica, extra) {
     return '<label class="campo"><span>' + rotulo + '</span><input id="' + id + '" value="' + esc(valor) + '" ' + (extra || 'inputmode="decimal"') + ">" +
@@ -31,9 +29,9 @@
 
   function lerFormulario(el) {
     return {
-      freteMinimoCent: lerCent(U.$("#cMin", el).value),
-      tarifaBaseCent: lerCent(U.$("#cBase", el).value),
-      valorPorKmCent: lerCent(U.$("#cKm", el).value),
+      freteMinimoCent: R.centavosDeTexto(U.$("#cMin", el).value),
+      tarifaBaseCent: R.centavosDeTexto(U.$("#cBase", el).value),
+      valorPorKmCent: R.centavosDeTexto(U.$("#cKm", el).value),
       multiplicador: Number(String(U.$("#cMult", el).value).replace(",", ".")),
       janelaPagamentoMin: Number(U.$("#cJanela", el).value),
       abandonoHoras: Number(U.$("#cAbandono", el).value),
@@ -49,9 +47,9 @@
       '<div class="config-grade">' +
       '<section class="painel"><h2>Frete</h2><p class="mudo">Fórmula tipo Uber Envios: <b>max(mínimo ; base + valor por km × km) × multiplicador</b>. Frete nunca é grátis.</p>' +
       '<div class="campos">' +
-      campo("cMin", "Frete mínimo (R$)", reais(cfg.freteMinimoCent)) +
-      campo("cBase", "Tarifa base (R$)", reais(cfg.tarifaBaseCent)) +
-      campo("cKm", "Valor por km (R$)", reais(cfg.valorPorKmCent)) +
+      campo("cMin", "Frete mínimo", U.dinheiro(cfg.freteMinimoCent)) +
+      campo("cBase", "Tarifa base", U.dinheiro(cfg.tarifaBaseCent)) +
+      campo("cKm", "Valor por km", U.dinheiro(cfg.valorPorKmCent)) +
       campo("cMult", "Multiplicador", String(cfg.multiplicador).replace(".", ","), "1,10 = Uber + 10% (decisão de 29/10)") +
       "</div><div id=\"simFrete\">" + simulacao(cfg) + "</div></section>" +
 
