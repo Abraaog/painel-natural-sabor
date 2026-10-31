@@ -1,0 +1,15 @@
+# Dependências (o projeto não usa nenhuma, mas por garantia)
+node_modules/
+
+# Vercel
+.vercel/
+
+# Artefatos de sistema / editor
+*.stackdump
+.DS_Store
+Thumbs.db
+*.log
+
+# Python local (servir.py)
+__pycache__/
+*.pyc

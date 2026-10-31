@@ -1,0 +1,14 @@
+﻿/* Relatórios (reaproveita .kpis da tela de pedidos, mas em grade livre) */
+#tela-relatorios .kpis { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+.abas { display: flex; gap: 2px; flex-wrap: wrap; border-bottom: 1px solid var(--border); margin: 18px 0 12px; }
+.abas button { height: 36px; padding: 0 12px; border: 0; border-bottom: 2px solid transparent; background: transparent; color: var(--text-2); font-weight: 500; cursor: pointer; margin-bottom: -1px; }
+.abas button:hover { color: var(--text); }
+.abas button span { margin-left: 4px; font-size: 12px; color: var(--text-3); }
+.abas button.ativa { color: var(--brand); border-bottom-color: var(--brand); font-weight: 600; }
+.tabela-rolagem { overflow-x: auto; background: var(--surface); border: 1px solid var(--border); border-radius: var(--raio); }
+table.relatorio { width: 100%; min-width: 880px; border-collapse: collapse; }
+table.relatorio th, table.relatorio td { padding: 9px 10px; border-bottom: 1px solid var(--border); text-align: left; white-space: nowrap; }
+table.relatorio th { font-size: 12px; font-weight: 500; color: var(--text-3); background: var(--surface-2); }
+table.relatorio tbody tr { cursor: pointer; }
+table.relatorio tbody tr:hover { background: var(--surface-2); }
+table.relatorio tfoot td { font-weight: 600; border-bottom: 0; background: var(--surface-2); }

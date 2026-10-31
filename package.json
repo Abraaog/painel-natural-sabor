@@ -1,0 +1,9 @@
+{
+  "name": "prototipo-painel-natural-sabor",
+  "private": true,
+  "description": "Protótipo do painel de pedidos (sem build, sem dependências).",
+  "scripts": {
+    "test": "node --test testes/regras.test.js",
+    "start": "python servir.py 8080"
+  }
+}

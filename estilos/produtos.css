@@ -1,0 +1,28 @@
+﻿/* Produtos */
+.produto-topo { display: flex; justify-content: space-between; align-items: flex-end; gap: 14px; flex-wrap: wrap; margin-bottom: 16px; }
+.produto-topo h2 { font-size: 16px; }
+.novo-sabor { display: flex; gap: 8px; flex-wrap: wrap; }
+.novo-sabor input[name="nome"] { width: 170px; }
+.novo-sabor input[name="tam"] { width: 110px; }
+.novo-sabor input[name="preco"] { width: 90px; }
+.novo-tam { display: flex; gap: 6px; margin-top: 8px; }
+.novo-tam input[name="tam"] { flex: 1; min-width: 0; }
+.novo-tam input[name="preco"] { width: 80px; }
+.btn-sm { padding: 4px 10px; font-size: 12.5px; white-space: nowrap; }
+.grade-sabores { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px; }
+.sabor { background: var(--surface); border: 1px solid var(--border); border-radius: var(--raio); padding: 14px 16px; transition: opacity var(--rapido); }
+.sabor header { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+.sabor h3 { font-size: 14.5px; flex: 1; }
+.sabor.desligado { background: var(--surface-2); }
+.sabor.desligado h3, .sabor.desligado table { opacity: .55; }
+.sabor table.mini td { padding: 5px 0; }
+.preco { width: 88px; height: 30px; text-align: right; }
+.chave { position: relative; display: inline-block; width: 34px; height: 20px; flex: none; }
+.chave input { position: absolute; opacity: 0; width: 0; height: 0; }
+.chave span { position: absolute; inset: 0; border-radius: 999px; background: var(--border-strong); cursor: pointer; transition: background var(--rapido); }
+.chave span::before { content: ""; position: absolute; left: 2px; top: 2px; width: 16px; height: 16px; border-radius: 50%; background: #fff; box-shadow: 0 1px 2px rgba(0, 0, 0, .2); transition: transform var(--rapido); }
+.chave input:checked + span { background: var(--brand); }
+.chave input:checked + span::before { transform: translateX(14px); }
+.chave input:focus-visible + span { outline: 2px solid var(--brand); outline-offset: 2px; }
+.chave input:disabled + span { opacity: .4; cursor: not-allowed; }
+.nota { margin-top: 16px; color: var(--text-3); font-size: 12.5px; max-width: 720px; }

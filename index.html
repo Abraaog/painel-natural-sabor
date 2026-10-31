@@ -1,0 +1,115 @@
+﻿<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Natural Sabor · Pedidos</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23127a4a'/%3E%3Cpath d='M16 7c4 5 7 8.6 7 12a7 7 0 0 1-14 0c0-3.4 3-7 7-12z' fill='%23fff'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="estilos/base.css">
+<link rel="stylesheet" href="estilos/layout.css">
+<link rel="stylesheet" href="estilos/pedidos.css">
+<link rel="stylesheet" href="estilos/produtos.css">
+<link rel="stylesheet" href="estilos/relatorios.css">
+<link rel="stylesheet" href="estilos/configuracoes.css">
+<link rel="stylesheet" href="estilos/simulador.css">
+<link rel="stylesheet" href="estilos/projeto.css">
+<link rel="stylesheet" href="estilos/responsivo.css">
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-pedidos" viewBox="0 0 24 24"><rect x="3" y="4" width="5" height="16" rx="1.5"/><rect x="10" y="4" width="5" height="11" rx="1.5"/><rect x="17" y="4" width="4" height="7" rx="1.5"/></symbol>
+  <symbol id="i-produtos" viewBox="0 0 24 24"><path d="M12 3c3.5 4.4 6 7.6 6 10.5a6 6 0 0 1-12 0C6 10.6 8.5 7.4 12 3z"/></symbol>
+  <symbol id="i-relatorios" viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></symbol>
+  <symbol id="i-config" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1 7 17M17 7l2.1-2.1"/></symbol>
+  <symbol id="i-whats" viewBox="0 0 24 24"><path d="M20 12a8 8 0 0 1-11.6 7.1L4 20l1-4.2A8 8 0 1 1 20 12z"/></symbol>
+  <symbol id="i-regras" viewBox="0 0 24 24"><path d="M6 3h9l4 4v14H6z"/><path d="M9 12h7M9 16h7M9 8h3"/></symbol>
+  <symbol id="i-sair" viewBox="0 0 24 24"><path d="M15 4h4v16h-4M10 8l-4 4 4 4M6 12h10"/></symbol>
+  <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+  <symbol id="i-fechar" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></symbol>
+</svg>
+
+<div id="tela-login" class="login oculto">
+  <form id="formLogin" class="login-caixa" autocomplete="on">
+    <div class="marca"><span class="logo"><svg><use href="#i-produtos"/></svg></span><div><b>Natural Sabor</b><small>Polpa de Frutas</small></div></div>
+    <h1>Entrar no painel</h1>
+    <label class="campo"><span>E-mail</span><input id="lEmail" type="email" required autocomplete="username"></label>
+    <label class="campo"><span>Senha</span><input id="lSenha" type="password" required autocomplete="current-password"></label>
+    <p id="lErro" class="erro" role="alert"></p>
+    <button class="btn btn-primario largo">Entrar</button>
+    <p class="demo">Protótipo · <code>operador@naturalsabor.com.br</code> · <code>polpa123</code></p>
+  </form>
+</div>
+
+<div id="app" class="app oculto">
+  <aside class="lateral" aria-label="Menu">
+    <div class="marca"><span class="logo"><svg><use href="#i-produtos"/></svg></span><div><b>Natural Sabor</b><small>Polpa de Frutas</small></div></div>
+    <nav>
+      <button class="menu-item" data-tela="pedidos"><svg><use href="#i-pedidos"/></svg>Pedidos<span id="badgePedidos" class="badge" title=""></span><span id="badgeAlerta" class="badge badge-alerta oculto" title="Pagamento depois do cancelamento">!</span></button>
+      <button class="menu-item" data-tela="produtos"><svg><use href="#i-produtos"/></svg>Produtos</button>
+      <button class="menu-item" data-tela="relatorios"><svg><use href="#i-relatorios"/></svg>Relatórios</button>
+      <button class="menu-item" data-tela="config"><svg><use href="#i-config"/></svg>Configurações</button>
+      <p class="menu-grupo">Demonstração</p>
+      <button class="menu-item" data-tela="simulador"><svg><use href="#i-whats"/></svg>Simulador WhatsApp</button>
+      <button class="menu-item" data-tela="mvp"><svg><use href="#i-regras"/></svg>Regras do MVP</button>
+    </nav>
+    <div class="lateral-rodape">
+      <span id="operador" class="operador"></span>
+      <button id="btnSair" class="btn-icone" aria-label="Sair" title="Sair"><svg><use href="#i-sair"/></svg></button>
+    </div>
+  </aside>
+
+  <main class="principal">
+    <header class="barra">
+      <button id="btnMenu" class="btn-icone so-celular" aria-label="Abrir menu"><svg><use href="#i-menu"/></svg></button>
+      <h1 id="tituloTela"></h1>
+      <div class="barra-status">
+        <span id="relogioSim" class="selo selo-amarelo oculto"></span>
+        <span class="ao-vivo">Ao vivo</span>
+        <span id="relogio" class="relogio"></span>
+      </div>
+    </header>
+    <section id="tela-pedidos" class="tela"></section>
+    <section id="tela-produtos" class="tela oculto"></section>
+    <section id="tela-relatorios" class="tela oculto"></section>
+    <section id="tela-config" class="tela oculto"></section>
+    <section id="tela-simulador" class="tela oculto"></section>
+    <section id="tela-mvp" class="tela oculto"></section>
+  </main>
+</div>
+
+<div id="modal" class="modal oculto" aria-hidden="true">
+  <div class="modal-caixa" role="dialog" aria-modal="true" aria-labelledby="modalTitulo" tabindex="-1">
+    <header class="modal-topo">
+      <div><h2 id="modalTitulo"></h2><p id="modalSub"></p></div>
+      <button id="modalFechar" class="btn-icone" aria-label="Fechar"><svg><use href="#i-fechar"/></svg></button>
+    </header>
+    <div id="modalCorpo" class="modal-corpo"></div>
+    <footer id="modalAcoes" class="modal-acoes"></footer>
+  </div>
+</div>
+
+<div id="toasts" class="toasts" aria-live="polite"></div>
+
+<script src="src/nucleo/regras.js"></script>
+<script src="src/nucleo/util.js"></script>
+<script src="src/dados/dados.js"></script>
+<script src="src/bot/textos.js"></script>
+<script src="src/dados/seed.js"></script>
+<script src="src/estado/estado.js"></script>
+<script src="src/bot/cep.js"></script>
+<script src="src/bot/bot.js"></script>
+<script src="src/ui/ui.js"></script>
+<script src="src/telas/pedidos.js"></script>
+<script src="src/telas/produtos.js"></script>
+<script src="src/telas/relatorios.js"></script>
+<script src="src/telas/config.js"></script>
+<script src="src/telas/simulador.js"></script>
+<script src="src/telas/projeto.js"></script>
+<script src="src/main.js"></script>
+</body>
+</html>
+

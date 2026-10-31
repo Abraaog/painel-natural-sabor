@@ -1,0 +1,8 @@
+﻿/* Configurações */
+.config-grade { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 16px; align-items: start; }
+.campos { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 14px; margin: 14px 0; }
+.sim-frete { border-top: 1px solid var(--border); padding-top: 14px; }
+.sim-frete label { display: flex; flex-direction: column; gap: 6px; font-size: 13px; color: var(--text-2); }
+.cidades { display: flex; gap: 18px; flex-wrap: wrap; margin: 8px 0 16px; }
+.cidades label { display: flex; align-items: center; gap: 6px; }
+.acoes-form { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; border-top: 1px solid var(--border); padding-top: 14px; }
